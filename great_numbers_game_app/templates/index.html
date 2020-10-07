@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Numbers Game</title>
+    {% load static %}
+    <link rel = 'stylesheet' href = {% static 'css/style.css' %}>
+</head>
+<body>
+    <div id = 'wrapper'>
+    <h1>GREAT NUMBERS GAME</h1>
+    <p>I'm thinking of a number between 1-100, can you guess what it is?</p>
+
+{% if request.session.correct %}
+    <div id = 'correct' class = "results_box">
+        <p>Congratulations on guessing the correct number! It took you {{request.session.count}} tries!</p>
+        <a href = '/restart'>Click here to play again!</a>
+    </div>
+
+{% endif %}
+{% if request.session.too_low %}
+    <div id = 'too_low' class = "results_box">
+        <p>Too low, try again!</p>
+    </div>
+{% endif %}
+{% if request.session.too_high %}
+    <div id = 'too_high' class = "results_box">
+        <p>Too High, try again!</p>
+    </div>
+{% endif %}
+    <form action = '/guess' method = 'post'>
+        {% csrf_token %}
+        <input type = 'text' name = 'number'>
+        <button type = 'submit'>Guess!</button>
+
+    </form>
+</div>
+</body>
+</html>
